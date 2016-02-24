@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def import_data():
     raw_data = pd.read_csv(data.csv, parse_dates=True, 
         infer_datetime_format=True)
-    raw_data[datetime_column] = pd.to_datetime(raw_data[datetime.column])
+    raw_data[datetime_column] = pd.to_datetime(raw_data[datetime_column])
     raw_data.index = raw_data[datetime_column]
     #Need to add code to catch errors and ensure this is in datetime format
     return raw_data
@@ -38,7 +38,7 @@ def reducer():
 
     freq = input("What frequency would you like to resample to? Format = XS(seconds), XT(minutes)")
 
-    resampled = data.resample(freq)
+    resampled = data.resample(freq, fill_method='bfill')
 
     print(data.size)
     print(resampled.size)
