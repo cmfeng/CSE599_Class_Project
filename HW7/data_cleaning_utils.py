@@ -35,9 +35,9 @@ def smooth_data(column):
 #Defining the function to reuce the size of the data
 def reducer():
     data = smooth_data()
-
     freq = input("What frequency would you like to resample to? Format = XS(seconds), XT(minutes)")
-
+    #This will resample the data.  If downsampling, it will take the mean of the
+    #points.  If upsampling, it will fill backwards
     resampled = data.resample(freq, fill_method='bfill')
 
     print(data.size)
