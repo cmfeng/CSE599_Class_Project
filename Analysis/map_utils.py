@@ -3,6 +3,9 @@
 import ee
 import ee.mapclient
 import datetime
+from geopandas import GeoDataFrame
+from shapely.geometry import shape
+
 
 
 # Authenticate your user credentials so you can access the API
@@ -12,11 +15,14 @@ ee.Initialize()
 ee.mapclient.centerMap(-93, 40, 4)
 
 
-"""In this step, you will select rows from a fusion table. 
+"""
+In this step, you will select rows from a fusion table. 
 This will allow you to display on a map feature data. 
 The feature data is sort of like a mappable array composed of 
 thousands of points, each with a lat/long 
-and many associated variables. """
+and many associated variables. 
+"""
+
 
 # Select the 'Sonoran desert' feature from the TNC Ecoregions fusion table.
 fc1 = (ee.FeatureCollection('ft:1Ec8IWsP8asxN-ywSqgXWMuBaxI6pPaeh6hC64lA')
@@ -34,12 +40,14 @@ ee.mapclient.addToMap(image2.paint(fc, 0, 5))
 
 
 
-""" In this step you are going to create a background map using Landsat imagery
+""" 
+In this step you are going to create a background map using Landsat imagery
 by filtering an image collection by date to make a median composite. The composite
 is composed of the stack of all the individual Landsat images from the entire date range.
 Each image also has many bands and each band represents different kinds of spectral information 
 collected by the instrument. 
 """
+
 
 # Import Landsat 8 satellite imagery
 var L8 = ee.ImageCollection("LANDSAT/LC8_L1T")   
@@ -64,6 +72,35 @@ image = image1.select('B3', 'B2', 'B1')
 ee.mapclient.addToMap(image, {'gain': [1.4, 1.4, 1.1]})
 
 
+
+def fc2df(fc):
+
+	""" Now we will write an automated function to convert a 
+	feature collection into a pandas Datafram so we can maninpulate
+	the data using geopandas
+	"""
+
+    # Features is a list of dict with the output
+    # this calls the attributes of the feature coll
+    features = fc.getInfo()['features']
+
+    dictarr = []
+      
+    for f in features:
+        # Store all attributes in a dict
+        attr = f['properties']
+        # and treat geometry separately
+        attr['geometry'] = f['geometry']  # GeoJSON Feature!b
+        # attr['geometrytype'] = f['geometry']['type']
+        dictarr.append(attr)
+       
+    df = GeoDataFrame(dictarr)
+    # Convert GeoJSON features to shape
+    df['geometry'] = map(lambda s: shape(s), df.geometry)    
+    return df
+
+# End fc2df
+# Now you have a geopandas dataframe!
 
 
 
