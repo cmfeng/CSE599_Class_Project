@@ -13,12 +13,14 @@ import wx
 
 class interface(wx.Frame):
     def __init__(self):
+
         # ids for panel and widgets in frame
         frame_id = 0
         panel_id = 1
         panel_id2 = 2
         cmbox_id = 2
         bt_id = 3
+
         # building new frame
         wx.Frame.__init__(self, None, frame_id, 'TimePlot', size=(1000, 500))
         """
@@ -28,6 +30,7 @@ class interface(wx.Frame):
         csvfile = 'pool82014-10-02cleaned.csv'
         self.data = pd.read_csv(csvfile, low_memory=False)
         self.time = pd.DatetimeIndex(self.data['time'])
+
         # get the column names for comobox
         columns = []
         for x in self.data.columns:
@@ -36,6 +39,7 @@ class interface(wx.Frame):
         self.panel2 = wx.Panel(self, panel_id2, style=wx.BORDER)
         self.cb = wx.ComboBox(self.panel, cmbox_id, choices=columns[2:])
         self.bt = wx.Button(self.panel, bt_id, label='plot')
+
         # add the figure to panel2
         self.figure = Figure()
         self.canvas = FigureCanvas(self.panel2, -1, self.figure)
