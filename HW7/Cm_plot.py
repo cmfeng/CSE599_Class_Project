@@ -71,8 +71,9 @@ class interface(wx.Frame):
         wx.EVT_BUTTON(self, bt_id, self.plot)
         self.Show()
 
-    # function to plot series
     def plot(self, e):
+
+        # function to plot series
         y = self.cb.GetValue()
         self.figure.add_subplot(111).plot(self.time, self.data[y])
 
