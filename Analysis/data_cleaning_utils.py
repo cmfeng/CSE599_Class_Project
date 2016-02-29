@@ -8,10 +8,10 @@ This step is key, as we have to ensure that the time format
 of the data is recognized
 """
 
-def import_data():
+def import_data(datafile):
     datetime_column = input("datetime column name? ")
-    raw_data = pd.read_csv("All Upstream.csv", parse_dates=True, 
-        infer_datetime_format=True)
+    raw_data = pd.read_csv(datafile, parse_dates=True, 
+        infer_datetime_format=True, thousands=",")
     raw_data[datetime_column] = pd.to_datetime(raw_data[datetime_column])
     raw_data.index = raw_data[datetime_column]
     #Need to add code to catch errors and ensure this is in datetime format
