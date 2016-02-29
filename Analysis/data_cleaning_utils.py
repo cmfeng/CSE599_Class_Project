@@ -41,7 +41,7 @@ def smooth_data(column, datafile):
 """
 Defining the function to reuce the size of the data
 """
-def reducer():
+def reducer(column, datafile):
     data = smooth_data("pH", datafile)
     freq = input("What frequency would you like to resample to? Format = XS(seconds), XT(minutes)")
     #This will resample the data.  If downsampling, it will take the mean of the
