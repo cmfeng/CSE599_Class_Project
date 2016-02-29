@@ -9,9 +9,11 @@ of the data is recognized
 """
 
 def import_data(datafile):
-    datetime_column = input("datetime column name? ")
     raw_data = pd.read_csv(datafile, parse_dates=True, 
         infer_datetime_format=True, thousands=",")
+    print(raw_data.columns())
+    datetime_column = input("datetime column name? ")
+
     raw_data[datetime_column] = pd.to_datetime(raw_data[datetime_column])
     #Need to add code to catch errors and ensure this is in datetime format
     return raw_data
