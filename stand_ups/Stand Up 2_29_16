@@ -1,0 +1,26 @@
+## Stand Up 2_29_16
+
+### Will Gagne-Maynard
+
+### Progress
+
+Last time, we identified 4 main areas of our project:
+*Data Cleaning
+*Statistics 
+*Time Series Visualization
+*Spatial Visualization -- link with Google Earth Engine
+
+We gave each team member one section and worked independently on each section
+
+### Deliverables
+More advnaced stats
+How to make them talk to eachother
+Interractive Plots
+Earth Engine + Jupyter
+
+
+### Challenges
+Need to modularize cleaning steps
+Support for EE Python is outdated, no answer from google
+
+
