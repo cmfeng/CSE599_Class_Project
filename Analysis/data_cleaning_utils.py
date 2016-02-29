@@ -22,8 +22,8 @@ Defining the first function to smooth the data
 This will return the dataframe with the smoothed data overwriting the raw
 it will also return a plot of the smoothed data overlaid on the raw data
 """
-def smooth_data(column):
-    data = import_data()
+def smooth_data(column, datafile):
+    data = import_data(datafile)
     #This asks the user for what size window to average over
     window = int(input("What size windows do you want for the moving average? "))
     moving = pd.rolling_mean(data[column], window)
@@ -42,7 +42,7 @@ def smooth_data(column):
 Defining the function to reuce the size of the data
 """
 def reducer():
-    data = smooth_data("pH")
+    data = smooth_data("pH", datafile)
     freq = input("What frequency would you like to resample to? Format = XS(seconds), XT(minutes)")
     #This will resample the data.  If downsampling, it will take the mean of the
     #points.  If upsampling, it will fill backwards
