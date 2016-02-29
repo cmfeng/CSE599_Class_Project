@@ -1,12 +1,16 @@
+"""regression.py"""
+
 from __future__ import print_function
 
 import os
 import pandas as pd
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+from statsmodels.sandbox.regression.predstd import wls_prediction_std
 
 from sklearn import linear_model
 from sklearn.linear_model import LinearRegression
@@ -16,7 +20,7 @@ def random_model(data =     pd.read_csv('../Data/mississippi/pool82014-10-02clea
                 index_col='FID', thousands=',', parse_dates=['time'])):
     """
     This function selects a random dependent variable y and 4 random
-    covariates of type float64 froma data set for a regression model
+    covariates of type float64 from a data set for a regression model
     """
 
     # Find variables in the data set with dtype float64
@@ -32,7 +36,7 @@ def random_model(data =     pd.read_csv('../Data/mississippi/pool82014-10-02clea
     # Define the formula as a string
     formulaStr = '%s ~ %s + %s + %s + %s' %(y, randomVars[0], randomVars[1], randomVars[2], randomVars[3])
 
-    return (data, y, randomVars, formulaStr);
+    return(data, y, randomVars, formulaStr);
 
 
 def compare_OLS(data = pd.read_csv('../Data/mississippi/pool82014-10-02cleaned.csv',
@@ -45,7 +49,7 @@ def compare_OLS(data = pd.read_csv('../Data/mississippi/pool82014-10-02cleaned.c
 
     # Generate a random model, using the random_model() function
     rmod = random_model(data)
-    dat = rmod[0]  # the imported data from random_model
+    dat = rmod[0]  # the imported data set from random_model function
 
     # Run a statsmodels OLS regression on y vs 4 random covariates
     print('statsmodels OLS regression on \n %s' % rmod[3])
@@ -57,7 +61,7 @@ def compare_OLS(data = pd.read_csv('../Data/mississippi/pool82014-10-02cleaned.c
     print('\n', mod1.summary(), '\n')
 
     # Run a scikit-learn OLS regression on the same model
-    print('\n', scikit-learn OLS regression on \n %s' % rmod[3], '\n')
+    print('\n scikit-learn OLS regression on \n %s' % rmod[3], '\n')
     y = dat[rmod[1]]
     x = dat[rmod[2]]
     mod2 = LinearRegression()
@@ -65,3 +69,39 @@ def compare_OLS(data = pd.read_csv('../Data/mississippi/pool82014-10-02cleaned.c
     print(mod2.intercept_)
     print(mod2.coef_)
     print(mod2.score(x, y))
+
+
+def user_model(data =     pd.read_csv('../Data/mississippi/pool82014-10-02cleaned.csv',
+                index_col='FID', thousands=',', parse_dates=['time'])):
+    """
+    This function allows the user to enter their own linear regression
+    model formula, which is then run in the statsmodels package and
+    returns model results.
+    """
+
+    # List available covariates in the data set
+    print('The data set contains the following covariates: \n')
+    print(list(data.columns), '\n')
+
+    # Prompt user to input model formula, in R type syntax
+    userFormula = choose_data = input('Enter your regression model formula, using syntax as shown: \n \n dependent_variable ~ covariate1 + covariate 2 + ... \n \n')
+
+    # Run the user-defined model as a statsmodels linear regression
+    userModel = smf.ols(formula=userFormula, data=data).fit()
+    print('\n', userModel.summary(), '\n')
+
+    # Retrieve x and y variables for plotting
+    yvar = userModel.model.endog_names
+    y = data[yvar]
+    covars = list(userModel.params.keys())
+    x = data[covars[1:(len(covars))]]
+
+    # Plot dependent variable data and model fitted values
+    prstd, iv_l, iv_u = wls_prediction_std(userModel)
+    fig = plt.figure(figsize=(12,6))
+
+    plt.plot(userModel.fittedvalues, 'r--.', label='Fitted Values')
+    plt.plot(y, '.', label='%s data' % yvar)
+    plt.xlim([0,len(y)+10])
+    plt.legend(loc='upper left')
+    plt.title('%s actual data and model fitted values' % yvar, fontsize='x-large')
