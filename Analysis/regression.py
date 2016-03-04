@@ -99,8 +99,8 @@ def user_model(data):
     prstd, iv_l, iv_u = wls_prediction_std(userModel)
     fig = plt.figure(figsize=(12,6))
 
-    plt.plot(x, userModel.fittedvalues, 'r--.', label='Fitted Values')
-    plt.plot(x, y, '.', label='%s data' % yvar)
+    plt.plot(x, userModel.fittedvalues, 'r.', alpha=0.2, label='Fitted Values')
+    plt.plot(x, y, 'b.', alpha=0.2, label='%s data' % yvar)
     plt.legend(loc='upper left')
     plt.title('%s actual data and model fitted values' % yvar, fontsize='x-large')
 
@@ -118,3 +118,32 @@ def correl(x, y):
 
     # Compute mean product (r-squared)
     return np.mean(x*y)
+
+
+def find_correlations(data, minCorr=0.2, maxCorr=0.9):
+    """
+    This function finds correlated variables within a data set,
+    and stores the correlated pairs in a data frame along with
+    the Pearson correlation coefficient (r-squared).
+
+    The function takes as arguments the data set, and minimum
+    and maximum correlation values of interest (0.2 - 0.9 by default).
+    """
+    # Identify float64 variables in the data set
+    floatVars = list(data.columns[data.dtypes == 'float64'])
+    floatData = data[floatVars]
+    nParams = len(floatVars)
+
+    # Initialize a dataframe to store correlated pairs
+    pairs = pd.DataFrame(columns = ['x','y','corr'])
+
+    # Find correlated variables, and store them in the dataframe
+    k=0
+    for i in range(0, nParams-1):
+        for j in range(i+1, nParams):
+            corr = correl(floatData.iloc[:,i], floatData.iloc[:,j])
+            if minCorr < corr < maxCorr:
+                pairs.loc[k] = [floatVars[i], floatVars[j], corr]
+            k = k+1
+
+    return pairs
