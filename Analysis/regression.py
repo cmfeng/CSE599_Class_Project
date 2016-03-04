@@ -6,7 +6,10 @@ import os
 import pandas as pd
 import numpy as np
 import random
+import math
+
 import matplotlib.pyplot as plt
+from matplotlib import gridspec
 
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -141,9 +144,36 @@ def find_correlations(data, minCorr=0.2, maxCorr=0.9):
     k=0
     for i in range(0, nParams-1):
         for j in range(i+1, nParams):
-            corr = correl(floatData.iloc[:,i], floatData.iloc[:,j])
+            corr = round(correl(floatData.iloc[:,i], floatData.iloc[:,j]),3)
             if minCorr < corr < maxCorr:
                 pairs.loc[k] = [floatVars[i], floatVars[j], corr]
             k = k+1
 
-    return pairs
+    return pairs.set_index([list(range(len(pairs)))])
+
+
+def plot_pairs(data, minCorr=0.2, maxCorr=0.9):
+    """
+    This function looks for correlated variables within a data set,
+    and then creates a grid of scatterplots of correlated pairs, with
+    the r-squared value in the title of each subplot.
+    """
+    # Call find_correlations function to get correlated pairs
+    pairs = find_correlations(data, minCorr, maxCorr)
+
+    # Set plot grid to necessary number of rows by 4 columns
+    cols = 4
+    rows = int(math.ceil(len(pairs) / cols))
+    gs = gridspec.GridSpec(rows, cols)
+    fig = plt.figure(figsize=(12,3*rows))
+
+    # Plot each correlated pair on a subplot
+    for i in range(0,len(pairs)):
+        ax = fig.add_subplot(gs[i])
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_xlabel('%s' % str(pairs.loc[i][0]), fontsize=14)
+        ax.set_ylabel('%s' % pairs.loc[i][1], fontsize=14)
+        ax.set_title('$r^2$ = %s' % str(pairs.loc[i][2]), fontsize=14)
+        ax.plot(data[pairs.loc[i][0]], data[pairs.loc[i][1]], 'b.', alpha=0.1)
+    fig.tight_layout(pad=3)
