@@ -4,20 +4,20 @@ import matplotlib.pyplot as plt
 
 """
 Importing the data.
-This step is key, as we have to ensure that the time format 
+This step is key, as we have to ensure that the time format
 of the data is recognized
 """
 datecol = ""
 
 def import_data(datafile):
-    raw_data = pd.read_csv(datafile, parse_dates=True, 
+    raw_data = pd.read_csv(datafile, parse_dates=True,
         infer_datetime_format=True, thousands=",")
     print(raw_data.columns)
     global datecol        # Needed to make datetime column global
-    datecol = input("datetime column name? ")
+    datecol = list(raw_data.columns[raw_data.dtypes == 'datetime64[ns]'])
+    # raw_data[datecol] = pd.to_datetime(raw_data[datecol])
+    # Need to add code to catch errors and ensure this is in datetime format
 
-    raw_data[datecol] = pd.to_datetime(raw_data[datecol])
-    #Need to add code to catch errors and ensure this is in datetime format
     return raw_data
 
 """
@@ -55,10 +55,3 @@ def reducer(datainput):
     print(datainput.size)
     print(resampled.size)
     return resampled
-
-
-
-
-
-
-
