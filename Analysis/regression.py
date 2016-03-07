@@ -161,11 +161,20 @@ def plot_pairs(data, minCorr=0.2, maxCorr=0.9):
     # Call find_correlations function to get correlated pairs
     pairs = find_correlations(data, minCorr, maxCorr)
 
-    # Set plot grid to necessary number of rows by 4 columns
-    cols = 4
-    rows = int(math.ceil(len(pairs) / cols))
-    gs = gridspec.GridSpec(rows, cols)
-    fig = plt.figure(figsize=(12,3*rows))
+    # Set plot grid to necessary number of rows by 4 cols (if data cols >4)
+    if len(pairs) > 3:
+        cols = 4
+        rows = int(math.ceil(len(pairs) / cols))
+        gs = gridspec.GridSpec(rows, cols)
+        fig = plt.figure(figsize=(12,3*rows))
+    elif len(pairs) == 0:
+        print('No correlations between %s and %s for this data set' % (minCorr, maxCorr))
+        return
+    else:
+        cols = len(pairs)
+        rows = 1
+        gs = gridspec.GridSpec(rows, cols)
+        fig = plt.figure(figsize=(3*cols, 3*rows))
 
     # Plot each correlated pair on a subplot
     for i in range(0,len(pairs)):
