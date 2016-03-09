@@ -11,12 +11,13 @@ datecol = ""
 
 def import_data(datafile):
     raw_data = pd.read_csv(datafile, parse_dates=True, 
-        infer_datetime_format=True, thousands=",")
+        infer_datetime_format=True, thousands=",", encoding='cp1252')
     print(raw_data.columns)
     global datecol        # Needed to make datetime column global
     datecol = input("datetime column name? ")
 
     raw_data[datecol] = pd.to_datetime(raw_data[datecol])
+    raw_data.index = raw_data[datecol]
     #Need to add code to catch errors and ensure this is in datetime format
     return raw_data
 
@@ -56,7 +57,16 @@ def reducer(datainput):
     print(resampled.size)
     return resampled
 
+"""
+Remove null values
+"""
 
+def nullRemover(datainput, column):
+    
+    cleanedoutput = datainput.dropna()
+    print(datainput.shape)
+    print(cleanedoutput.shape)
+    return cleanedoutput
 
 
 
