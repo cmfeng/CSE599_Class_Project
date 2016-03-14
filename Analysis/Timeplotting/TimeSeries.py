@@ -11,7 +11,7 @@ def readcsv(csvfile):
 
 def timeplot(data):
 	#input data is a DataFrame
-	time = pd.DatetimeIndex(data['time'])
+	time = pd.DatetimeIndex(data['ltime'])
 	#String list to store column names from the third column of the dataframe
 	columns = []
 	for x in data.columns[2:]:
@@ -22,23 +22,26 @@ def timeplot(data):
 			for i in range(len(data[x])):
 				data[x][i] = float(data[x][i].replace(',',''))
 	output_notebook()
-	y = data[columns[0]]
+	y = data[columns[1]]
 	x = time
 	p = Figure(x_axis_type = 'datetime')
-	source = ColumnDataSource(data=dict(x=x, y=y, d=data, c=columns))
-	p.circle('x', 'y', source = source)
-	callback = CustomJS(args = dict(source = source), code="""
+	
+	source = ColumnDataSource(data=dict(x=x, y=y, d=data))
+	#create a new columndatasoure to pass column name to CustomJS
+	source2 = ColumnDataSource(data = dict(columns = columns))
+
+	p.line('x', 'y', source = source)
+	
+	callback = CustomJS(args = dict(source = source, columns=source2), code="""
 				var data = source.get('data');
+				var columns = columns.get('data')['columns'];
 				var f = cb_obj.get('value');
-				//console.log('f');
-				//console.log(f);
-				x = data['x'];
 				y = data['y'];
+				console.log('y');
+				console.log(y);
 				var d = data['d'];
-				var columns = data['c'];
-				//console.log('d');
-				//console.log(d);
 				//get the index of the chosen column from the widget
+
 				for(i = 0; i<columns.length;i++){
 					if(f[0]==columns[i]){
 					index = i;
@@ -51,12 +54,11 @@ def timeplot(data):
 					y[i] = d[i][index+2];
 				}
 				console.log('y');
-				console.log(y);
+				console.log(y.length);
 				source.trigger('change');
 				""")
+	
 	select = MultiSelect(title="Y_Option:", value=[columns[0]],
 							options=columns, callback=callback)
 	layout = vform(select, p)
 	show(layout)
-	
-	
