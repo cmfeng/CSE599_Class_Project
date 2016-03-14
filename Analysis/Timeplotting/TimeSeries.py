@@ -14,10 +14,10 @@ def timeplot(data):
 	time = pd.DatetimeIndex(data['ltime'])
 	#String list to store column names from the third column of the dataframe
 	columns = []
-	for x in data.columns[2:]:
+	for x in data.columns[1:]:
 		columns.append(x)
 	#change string to float in the data 
-	for x in columns:
+	for x in columns[0:(len(columns)-2)]:
 		if (type(data[x][0]) is str):
 			for i in range(len(data[x])):
 				data[x][i] = float(data[x][i].replace(',',''))
@@ -51,7 +51,7 @@ def timeplot(data):
 				//takes dataframe as an array of arrays which is 
 				//a row of the DataFrame
 				for (i = 0; i < d.length; i++) {
-					y[i] = d[i][index+2];
+					y[i] = d[i][index+1];
 				}
 				console.log('y');
 				console.log(y.length);
