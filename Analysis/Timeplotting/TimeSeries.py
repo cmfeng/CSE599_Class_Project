@@ -24,14 +24,15 @@ def timeplot(data):
 	output_notebook()
 	y = data[columns[1]]
 	x = time
-	p = Figure(x_axis_type = 'datetime')
+	p = Figure(x_axis_type = 'datetime', title = "TimeSeries Plotting")
 	
 	source = ColumnDataSource(data=dict(x=x, y=y, d=data))
 	#create a new columndatasoure to pass column name to CustomJS
 	source2 = ColumnDataSource(data = dict(columns = columns))
 
 	p.line('x', 'y', source = source)
-	
+	p.xaxis.axis_label = "Time"
+	p.yaxis.axis_label = "Selected Y"
 	callback = CustomJS(args = dict(source = source, columns=source2), code="""
 				var data = source.get('data');
 				var columns = columns.get('data')['columns'];
