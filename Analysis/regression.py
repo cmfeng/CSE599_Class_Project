@@ -110,17 +110,15 @@ def user_model(data):
 
 def correl(x, y):
     """
-    Compute Pearson correlation coefficient (r-squared)
+    Compute Pearson correlation coefficient (r)
     """
+    xbar = x.mean(0)
+    ybar = y.mean(0)
+    numerator = sum((x-xbar)*(y-ybar))
+    denominator = math.sqrt(sum((x-xbar)**2))*math.sqrt(sum((y-ybar)**2))
 
-    # Normalize X and Y
-    x -= x.mean(0)
-    y -= y.mean(0)
-    x /= x.std(0)
-    y /= y.std(0)
-
-    # Compute mean product (r-squared)
-    return np.mean(x*y)
+    # Compute mean product (r)
+    return numerator/denominator
 
 
 def find_correlations(data, minCorr=0.2, maxCorr=0.9):
