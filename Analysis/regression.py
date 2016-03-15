@@ -120,7 +120,7 @@ def correl(x, y):
     y /= y.std(0)
 
     # Compute mean product (r-squared)
-    return np.mean(x*y)
+    return (np.mean(x*y)**2)
 
 
 def find_correlations(data, minCorr=0.2, maxCorr=0.9):

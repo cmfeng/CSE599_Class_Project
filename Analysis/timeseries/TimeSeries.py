@@ -3,11 +3,7 @@ from bokeh.io import output_notebook, show, vform
 from bokeh.models import CustomJS, ColumnDataSource, MultiSelect
 import pandas as pd
 
-'''
-def readcsv(csvfile):
-	data = pd.read_csv(csvfile)
-	return data
-'''
+
 
 def timeplot(data):
 	#input data is a DataFrame
