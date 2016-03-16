@@ -12,19 +12,22 @@ The purpose of this directory is to provide information and procedures for using
 
 Key documents in this directory include: 
 
-**Python API Instructions** 
+**ee_python_api_instructions** 
 contains directions for how to set up an Earth Engine user account with a Python user interface for first time users. 
 
-**mapping.ipynb**
+**ee_mapping.ipynb**
 Provides a demo script showing how to initialize Earth Engine and visualize data interactively with a map widget. 
 
 **ee_utils**
 Contains useful functions to check and make sure authentication and initialization is running smoothly. 
 
-**unit_tests** 
-Debugs simple tasks from the mapping.ipynb and ee_utils.
+**ee_debug** 
+Debugs simple tasks from the mapping.ipynb and ee_utils using unit tests
 
-**various images**
+**define_google_maps_interactive_widget.ipynb**
+Tyler Erickson's useful code that you will need to display maps inline in your IPython notebook. 
+
+**demo images**
 Including screenshots of the interactive mapping widget displaying both in situ field-collected data (chemistry) and remotely sensed imagery (satellites).
 
 Enjoy!
