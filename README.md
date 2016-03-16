@@ -6,6 +6,7 @@ Rivers, lakes and wetlands are generally known to be net sources of greenhouse g
 ### Links to Demo Notebooks
  * [Data Cleaning Example](/Analysis/eRiversExample.ipynb/)
  * [Mapping Example](/Analysis/maps/ee_mapping.ipynb/)
+
 ### License:
 For this project, we chose the MIT License, as we wanted our licensing to be simple and allow others to use and improve our software.
 
