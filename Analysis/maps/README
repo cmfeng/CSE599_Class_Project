@@ -1,1 +1,30 @@
+Welcome to the Map ToolPack!
 
+Catherine Kuhn 
+University of Washington 
+Spring 2016
+
+If you are grading this for CSE599, mapping.ipynb is the file you need. You will not be able to run the code unless you follow the set-up instructions described in Python API Instructions, but I have provided screenshots (see below) to demonstrate what the outputs look like. 
+
+********************************************************************************
+
+The purpose of this directory is to provide information and procedures for using a Python API to call Google Earth Engine and perform geospatial operations from the IPython Notebook platform. 
+
+Key documents in this directory include: 
+
+**Python API Instructions** 
+contains directions for how to set up an Earth Engine user account with a Python user interface for first time users. 
+
+**mapping.ipynb**
+Provides a demo script showing how to initialize Earth Engine and visualize data interactively with a map widget. 
+
+**ee_utils**
+Contains useful functions to check and make sure authentication and initialization is running smoothly. 
+
+**unit_tests** 
+Debugs simple tasks from the mapping.ipynb and ee_utils.
+
+**various images**
+Including screenshots of the interactive mapping widget displaying both in situ field-collected data (chemistry) and remotely sensed imagery (satellites).
+
+Enjoy!
