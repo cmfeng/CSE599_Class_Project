@@ -25,7 +25,7 @@ This will install the most recent published Bokeh release from the Continuum Ana
 
 pip install bokeh
 
-#### Runnind Example Notebooks
+#### Running Example Notebooks
 
 To run our demo notebooks or our packages, clone this github repo to your local machine and navigate to the Analysis folder.  From here, you can import our functions and run demo Notebooks locally
 
