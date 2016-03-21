@@ -35,8 +35,5 @@ To run our demo notebooks or our packages, clone this github repo to your local 
  * [Mapping Example](/Analysis/maps/ee_mapping.ipynb/)
 
 ### License:
-For this project, we chose the MIT License, as we wanted our licensing to be simple and allow others to use and improve our software.
+This project utilizes the MIT license.
 
-### Directory structure is as follows:
-- **Data** directory with subdirectories **Mississippi** and **Amazon** to separately store the data files associated with each of those rivers.
-- **Analysis** directory to store ipython notebooks and other files associated with our development of the data analysis toolpak.
