@@ -21,7 +21,6 @@ def timeplot(data):
 	y = data[columns[1]]
 	x = time
 	p = Figure(x_axis_type = 'datetime', title = "TimeSeries Plotting")
-	
 	source = ColumnDataSource(data=dict(x=x, y=y, d=data))
 	#create a new columndatasoure to pass column name to CustomJS
 	source2 = ColumnDataSource(data = dict(columns = columns))
