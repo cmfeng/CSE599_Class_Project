@@ -13,7 +13,7 @@ Rivers, lakes and wetlands are generally known to be net sources of greenhouse g
 * numpy
 * statsmodels
 
-Here are two ways to install packages:
+Here are two ways to install Bokeh packages:
 
 #### 1. If you are already an Anaconda user, you can simply run the command:
 
