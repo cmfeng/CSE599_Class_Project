@@ -13,15 +13,22 @@ Rivers, lakes and wetlands are generally known to be net sources of greenhouse g
 * numpy
 * statsmodels
 
-Here are two ways to install Bokeh packages:
-
-#### 1. If you are already an Anaconda user, you can simply run the command:
+Here are how to install packages:
+#### 1. Download miniconda and install it on your system and use the conda command-line tool to update your package listing and install the IPython notebook:
+#### 2. Update conda's listing of packages for your system:
+$ conda update conda
+#### 3. Install IPython notebook and all its requirements
+$ conda install ipython-notebook
+#### 4. Install Python's Data Science packages
+$ conda install numpy scipy pandas matplotlib
+#### 5. Bokeh Package
+##### 1. If you are already an Anaconda user, you can simply run the command:
 
 conda install bokeh
 
 This will install the most recent published Bokeh release from the Continuum Analytics Anaconda repository, along with all dependencies.
 
-#### 2. Alternatively, it is possible to install from PyPI using pip:
+##### 2. Alternatively, it is possible to install from PyPI using pip:
 
 pip install bokeh
 
